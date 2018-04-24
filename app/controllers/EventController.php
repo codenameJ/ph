@@ -22,24 +22,27 @@ class EventController extends ControllerBase {
     public function indexAction(){
         if($this->request->isPost()){
 
-	    $eventname = trim($this->request->getPost('event_name'));
+	$eventname = trim($this->request->getPost('event_name'));
        $eventdate = trim($this->request->getPost('event_date')); // รับค่าจาก form     
        $eventdetail = trim($this->request->getPost('event_detail')); // รับค่าจาก form
 
-       $photoUpdate='';
+ $photoUpdate='';
        if($this->request->hasFiles() == true){
+
+//$photoUpdate= trim($this->request->getPost('event_detail'));
+
          $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
          $uploads = $this->request->getUploadedFiles();
          $isUploaded = false;			
          foreach($uploads as $upload){
            if(in_array($upload->gettype(), $allowed)){					
              $photoName=md5(uniqid(rand(), true)).strtolower($upload->getname());
-             $path = '../public/img/event/'.$photoName;
+             $path = '../public/event/'.$photoName;
              ($upload->moveTo($path)) ? $isUploaded = true : $isUploaded = false;
            }
          }
          if($isUploaded)  $photoUpdate=$photoName ;
-         }else
+         }else    
          die('You must choose at least one file to send. Please try again.');
      
          
@@ -51,6 +54,7 @@ class EventController extends ControllerBase {
       $eventObj->save();
 
       $this->response->redirect('event/show');
+
     }
    }
  
@@ -69,7 +73,7 @@ class EventController extends ControllerBase {
 				foreach($uploads as $upload){
 					if(in_array($upload->gettype(), $allowed)){					
 					 $photoName=md5(uniqid(rand(), true)).strtolower($upload->getname());
-					 $path = '../public/img/event/'.$photoName;
+					 $path = '../public/event/'.$photoName;
 					 ($upload->moveTo($path)) ? $isUploaded = true : $isUploaded = false;
 					}
 				}
@@ -127,3 +131,4 @@ class EventController extends ControllerBase {
 
 }
 
+?>

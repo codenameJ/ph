@@ -25,8 +25,9 @@ class ProfileController extends ControllerBase {
 				}
 							 
 				if($isUploaded)  $photoUpdate=$photoName ;
-		}else
-				 die('You must choose at least one file to send. Please try again.');
+		}
+//else
+//				 die('You must choose at least one file to send. Please try again.');
  	
 	  $profileId = trim($this->request->getPost('profileId'));
       $email = trim($this->request->getPost('email')); // รับค่าจาก form     
@@ -42,7 +43,7 @@ class ProfileController extends ControllerBase {
    }else
    $profileId=$this->session->get('memberAuthen');
 
-   $profile=user::findFirst($profileId);
+   $profile=User::findFirst($profileId);
    $this->view->profile=$profile;
    
   }	
